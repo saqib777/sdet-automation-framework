@@ -1,4 +1,4 @@
-# 🧪 Python UI Automation Framework (Pytest + Selenium)
+#  Python UI Automation Framework (Pytest + Selenium)
 
 This repository documents my hands-on journey into **UI automation testing using Python, Pytest, and Selenium**.
 It is not just a collection of scripts — it is a **learning-first automation framework** built step by step with real problems, failures, fixes, and improvements.
@@ -9,7 +9,7 @@ The goal of this project is simple:
 
 ---
 
-## ✨ What this project demonstrates
+##  What this project demonstrates
 
 * Page Object Model (POM) from scratch
 * Pytest-based test structure
@@ -24,7 +24,7 @@ This repo reflects **practical learning**, not tutorial copy-paste.
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
 
 ```
 Python_Foundation/
@@ -57,7 +57,7 @@ Python_Foundation/
 
 ---
 
-## 🧱 Architecture Overview
+##  Architecture Overview
 
 ### Page Object Model (POM)
 
@@ -73,27 +73,27 @@ Example (conceptual):
 
 ---
 
-## ▶️ How to Run the Tests
+##  How to Run the Tests
 
-### 1️⃣ Install dependencies
+### 1️ Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2️⃣ Run all tests
+### 2️ Run all tests
 
 ```bash
 pytest -v
 ```
 
-### 3️⃣ Run only smoke tests
+### 3️ Run only smoke tests
 
 ```bash
 pytest -m smoke -v
 ```
 
-### 4️⃣ Run regression suite
+### 4️ Run regression suite
 
 ```bash
 pytest -m regression -v
@@ -101,7 +101,7 @@ pytest -m regression -v
 
 ---
 
-## 🏷️ Pytest Markers Used
+##  Pytest Markers Used
 
 Markers help control execution and prevent unstable tests from blocking progress.
 
@@ -121,7 +121,7 @@ def test_valid_login():
 
 ---
 
-## 🖥️ Headless Execution
+##  Headless Execution
 
 The framework supports **headless Chrome execution** using an environment variable.
 
@@ -150,7 +150,7 @@ This is handled centrally inside `conftest.py`.
 
 ---
 
-## ⚠️ Handling Unstable Tests
+##  Handling Unstable Tests
 
 Some UI flows (e.g. Google Images) are intentionally **kept but skipped**:
 
@@ -166,7 +166,7 @@ Why?
 
 ---
 
-## 🧠 What I Learned Building This
+##  What I Learned Building This
 
 * Why Page Objects matter long-term
 * How small design mistakes cause test flakiness
@@ -177,7 +177,7 @@ Why?
 
 ---
 
-## 🚀 Future Improvements
+##  Future Improvements
 
 Planned next steps:
 
@@ -189,7 +189,7 @@ Planned next steps:
 
 ---
 
-## 📌 Final Note
+##  Final Note
 
 This repository represents **growth**, not perfection.
 
