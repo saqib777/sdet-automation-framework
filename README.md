@@ -1,198 +1,222 @@
-#  Python UI Automation Framework (Pytest + Selenium)
+# Python Foundation for Testing (SDET Journey)
 
-This repository documents my hands-on journey into **UI automation testing using Python, Pytest, and Selenium**.
-It is not just a collection of scripts — it is a **learning-first automation framework** built step by step with real problems, failures, fixes, and improvements.
+This repository documents my hands-on journey from Python fundamentals to becoming a full-fledged **SDET (Software Development Engineer in Test)**. It is intentionally built step by step, focusing on *how real testing frameworks grow over time*, not just on writing passing tests.
 
-The goal of this project is simple:
-
-> Build a clean, maintainable, and scalable UI automation framework the way it is done in real-world QA / SDET teams.
+The project covers **UI automation, API testing, performance basics, flaky test analysis, and test strategy**, all structured in a scalable and production-style layout.
 
 ---
 
-##  What this project demonstrates
+## Why this repository exists
 
-* Page Object Model (POM) from scratch
-* Pytest-based test structure
-* Clean separation of tests and page logic
-* Reusable fixtures using `conftest.py`
-* Headless and non-headless browser execution
-* Test categorization using Pytest markers
-* Handling flaky / unstable UI tests safely
-* Debugging real Selenium issues (timeouts, locators, waits)
+This is not a demo project.
 
-This repo reflects **practical learning**, not tutorial copy-paste.
+This repository exists to:
+
+* Practice **real SDET workflows**, not shortcuts
+* Understand *why* frameworks are structured the way they are
+* Build confidence in debugging, refactoring, and scaling test suites
+* Simulate how testing evolves in real companies
+
+Every failure, refactor, and design decision here is intentional and educational.
 
 ---
 
-## Project Structure
+## Project Structure (High-Level)
 
 ```
-Python_Foundation/
+Python_Foundation
 │
 ├── src/
-│   ├── pages/                # Page Object classes
+│   ├── api/                # API clients and API-level logic
+│   │   ├── base_client.py  # Reusable HTTP client (requests wrapper)
+│   │   ├── auth_api.py     # Authentication-related API actions
+│   │   └── __init__.py
+│   │
+│   ├── pages/              # Page Object Model (UI automation)
 │   │   ├── login_page.py
-│   │   ├── checkbox_page.py
 │   │   ├── dynamic_loading_page.py
+│   │   ├── checkbox_page.py
 │   │   └── google_home_page.py
 │   │
-│   ├── selenium_basics/       # Browser setup & helpers
-│   └── utils/                 # Utility functions
+│   ├── selenium_basics/    # Early Selenium learning experiments
+│   └── utils/              # Shared helpers (strings, math, etc.)
 │
 ├── tests/
-│   ├── ui/                    # UI test cases
-│   │   ├── test_login_positive.py
-│   │   ├── test_login_negative.py
-│   │   ├── test_checkboxes.py
-│   │   ├── test_dynamic_loading.py
-│   │   └── test_dynamic_loading_content.py
-│   │
-│   └── conftest.py            # Shared Pytest fixtures
+│   ├── ui/                 # UI test cases (pytest + Selenium)
+│   ├── api/                # API test cases (pytest + requests)
+│   ├── performance/        # Performance & timing-related tests
+│   └── test_strategy/      # Test design, notes, and strategy docs
 │
-├── pytest.ini                 # Pytest configuration & markers
-├── requirements.txt           # Dependencies
-├── README.md
+├── conftest.py              # Shared pytest fixtures (browser, config)
+├── pytest.ini               # Pytest config + markers
+├── requirements.txt         # All dependencies
+├── README.md                # You are here
 └── .gitignore
 ```
 
 ---
 
-##  Architecture Overview
+## Core Testing Areas Covered
 
-### Page Object Model (POM)
+### 1. UI Automation (Selenium + Pytest)
 
-* Each page has **one responsibility**
-* Locators stay inside page classes
-* Tests never directly touch Selenium locators
-* UI changes require updates in **one place only**
+* Page Object Model (POM)
+* Explicit waits and synchronization
+* Positive and negative test scenarios
+* Marker-based execution (`smoke`, `regression`)
+* Handling unstable UI tests (skipped/flaky tests)
 
-Example (conceptual):
+Example scenarios:
 
-* `LoginPage` → knows *how* to login
-* Test → knows *what* to verify
+* Login (positive & negative)
+* Dynamic content loading
+* Checkbox interactions
+* Google Images exploration (kept for learning, marked unstable)
 
 ---
 
-##  How to Run the Tests
+### 2. API Testing (Requests + Pytest)
 
-### 1️ Install dependencies
+This is where the project transitions from **tester** to **SDET**.
 
-```bash
+Key ideas:
+
+* API tests do not depend on UI
+* Logic is reusable and layered
+* Failures are faster and more reliable
+
+Design approach:
+
+* `BaseAPIClient` handles:
+
+  * HTTP methods (GET, POST, PUT, DELETE)
+  * Headers
+  * Timeouts
+  * Response handling
+* Feature-specific APIs (e.g. `auth_api.py`) extend this base
+
+Planned API test coverage:
+
+* Authentication success & failure
+* Invalid payload handling
+* Status code validation
+* Schema / response structure checks
+* Token-based flows
+
+---
+
+### 3. Performance & Stability Testing (Intro Level)
+
+This section focuses on **test behavior**, not load testing tools yet.
+
+Includes:
+
+* Response time assertions
+* Slow endpoint detection
+* Identifying flaky tests
+* Marking unstable tests intentionally
+
+This mirrors how performance awareness starts in real QA teams.
+
+---
+
+### 4. Flaky Test Analysis
+
+Instead of hiding flaky tests, this repo:
+
+* Keeps them
+* Marks them
+* Documents why they are flaky
+
+This teaches:
+
+* When to fix
+* When to quarantine
+* When to skip with intent
+
+---
+
+### 5. Test Strategy & Design Thinking
+
+The `test_strategy/` section focuses on *thinking like an SDET*:
+
+* Why a test exists
+* What risk it covers
+* What layer it belongs to (UI vs API)
+* When not to automate
+
+This is where testing becomes engineering.
+
+---
+
+## Tooling & Tech Stack
+
+* **Python 3.14+**
+* **Pytest** – test framework
+* **Selenium** – UI automation
+* **Requests** – API testing
+* **Git & GitHub** – version control
+* **Virtual Environments** – dependency isolation
+
+---
+
+## How to Run the Project
+
+### Setup
+
+```
+python -m venv .venv
+.venv\Scripts\activate   # Windows
 pip install -r requirements.txt
 ```
 
-### 2️ Run all tests
+### Run all tests
 
-```bash
+```
 pytest -v
 ```
 
-### 3️ Run only smoke tests
+### Run only smoke tests
 
-```bash
+```
 pytest -m smoke -v
 ```
 
-### 4️ Run regression suite
+### Run headless (CI-style)
 
-```bash
-pytest -m regression -v
 ```
-
----
-
-##  Pytest Markers Used
-
-Markers help control execution and prevent unstable tests from blocking progress.
-
-```ini
-smoke       → critical core flows
-regression  → full test suite
-flaky       → unstable UI tests (kept for learning)
-```
-
-Example usage:
-
-```python
-@pytest.mark.smoke
-def test_valid_login():
-    ...
-```
-
----
-
-##  Headless Execution
-
-The framework supports **headless Chrome execution** using an environment variable.
-
-### Normal mode (browser visible)
-
-```bash
+set HEADLESS=true
 pytest -v
 ```
 
-### Headless mode
+---
 
-**PowerShell:**
+## Philosophy Behind This Repo
 
-```powershell
-$env:HEADLESS="true"
-pytest -v
-```
+This repository is intentionally:
 
-**Linux / macOS:**
+* Incremental
+* Sometimes messy
+* Frequently refactored
 
-```bash
-HEADLESS=true pytest -v
-```
+Because **real SDET work is exactly like that**.
 
-This is handled centrally inside `conftest.py`.
+The goal is not perfection.
+The goal is *understanding, ownership, and growth*.
 
 ---
 
-##  Handling Unstable Tests
+## Roadmap Ahead
 
-Some UI flows (e.g. Google Images) are intentionally **kept but skipped**:
-
-```python
-@pytest.mark.skip(reason="Google UI is unstable – kept for learning")
-```
-
-Why?
-
-* Shows real-world flakiness
-* Demonstrates responsible test management
-* Prevents CI noise
+* Expand API test suites (5+ tests per scenario)
+* Add response schema validation
+* Introduce basic mocking concepts
+* Improve reporting
+* Prepare CI integration
 
 ---
 
-##  What I Learned Building This
+If you are reading this as a future version of me:
 
-* Why Page Objects matter long-term
-* How small design mistakes cause test flakiness
-* How Pytest collection works
-* Why explicit waits beat sleep
-* Why not every test should block the pipeline
-* How real automation frameworks evolve over time
-
----
-
-##  Future Improvements
-
-Planned next steps:
-
-* GitHub Actions CI pipeline
-* HTML test reports
-* Better wait abstractions
-* Data-driven tests
-* Cross-browser execution
-
----
-
-##  Final Note
-
-This repository represents **growth**, not perfection.
-
-Every failure, fix, and refactor here reflects how automation is actually learned and built in real projects.
-
-If you are learning Selenium + Pytest and want a **clean, honest reference**, this repo is for you.
+This is where the journey stopped being about tests —
+and started being about engineering.
