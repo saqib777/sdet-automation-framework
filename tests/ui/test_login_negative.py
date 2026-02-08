@@ -1,3 +1,7 @@
+import pytest
+
+pytestmark = pytest.mark.ui
+
 from pages.login_page import LoginPage
 
 

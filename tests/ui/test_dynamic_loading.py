@@ -1,4 +1,7 @@
 import pytest
+
+pytestmark = pytest.mark.ui
+
 from pages.dynamic_loading_page import DynamicLoadingPage
 
 @pytest.mark.smoke

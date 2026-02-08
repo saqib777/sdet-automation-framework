@@ -1,4 +1,7 @@
 import pytest
+
+pytestmark = pytest.mark.ui
+
 from pages.google_home_page import GoogleHomePage
 
 

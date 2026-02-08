@@ -1,3 +1,8 @@
+
+import pytest
+
+pytestmark = pytest.mark.ui
+
 from pages.checkbox_page import CheckboxPage
 
 
