@@ -7,6 +7,12 @@ from api.auth_api import AuthAPI
 def auth_api():
     return AuthAPI()
 
+def safe_json(response):
+    try:
+        return response.json()
+    except ValueError:
+        return None
+
 # NOTE:
 # This API does not support programmatic login.
 # Success login via API always returns 403.
@@ -57,8 +63,8 @@ def test_login_response_time(auth_api):
 
     assert response.elapsed.total_seconds() < 2
 
-def safe_json(response):
-    try:
-        return response.json()
-    except ValueError:
-        return None
+# def safe_json(response):
+#     try:
+#         return response.json()
+#     except ValueError:
+#         return None
