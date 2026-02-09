@@ -1,5 +1,6 @@
 import requests
 
+
 class BaseAPIClient:
     def __init__(self, base_url, headers=None, timeout=10):
         self.base_url = base_url
@@ -7,16 +8,19 @@ class BaseAPIClient:
         self.session.headers.update(headers or {})
         self.timeout = timeout
 
+    def _url(self, endpoint):
+        return f"{self.base_url}{endpoint}"
+
     def get(self, endpoint, params=None):
         return self.session.get(
-            self.base_url + endpoint,
+            self._url(endpoint),
             params=params,
             timeout=self.timeout
         )
 
     def post(self, endpoint, json=None, data=None):
         return self.session.post(
-            self.base_url + endpoint,
+            self._url(endpoint),
             json=json,
             data=data,
             timeout=self.timeout
@@ -24,13 +28,13 @@ class BaseAPIClient:
 
     def put(self, endpoint, json=None):
         return self.session.put(
-            self.base_url + endpoint,
+            self._url(endpoint),
             json=json,
             timeout=self.timeout
         )
 
     def delete(self, endpoint):
         return self.session.delete(
-            self.base_url + endpoint,
+            self._url(endpoint),
             timeout=self.timeout
         )
