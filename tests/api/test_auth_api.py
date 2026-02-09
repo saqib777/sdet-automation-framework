@@ -26,6 +26,18 @@ def safe_json(response):
     # assert response.status_code == 200
     assert "token" in response.json()
 
+def test_login_success(auth_api):
+    response = auth_api.login(
+        email="cityslicka",
+        password="secret"
+    )
+
+    assert response.status_code == 200
+
+    body = safe_json(response)
+    assert body is not None
+    assert "token" in body
+
 
 def test_login_missing_password(auth_api):
     response = auth_api.login(
