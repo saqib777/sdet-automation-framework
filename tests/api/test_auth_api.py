@@ -79,3 +79,11 @@ def test_login_response_time(auth_api):
 #         return response.json()
 #     except ValueError:
 #         return None
+
+def test_register_missing_password(auth_api):
+    response = auth_api.register(
+        email="eve.holt@reqres.in",
+        password=""
+    )
+
+    assert response.status_code == 400
