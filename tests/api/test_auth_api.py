@@ -28,11 +28,13 @@ def safe_json(response):
 
 def test_login_success(auth_api):
     response = auth_api.login(
-        email="cityslicka",
-        password="secret"
+        email="eve.holt@reqres.in",
+        password="cityslicka"
     )
 
     assert response.status_code == 200
+    assert "token" in response.json()
+
 
     body = safe_json(response)
     assert body is not None
