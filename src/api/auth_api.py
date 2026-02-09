@@ -1,7 +1,3 @@
-from api.base_client import BaseAPIClient
-
-
-
 class AuthAPI:
     def __init__(self):
         self.client = BaseAPIClient(
@@ -19,12 +15,10 @@ class AuthAPI:
         return self.client.post("/login", json=payload)
 
     def register(self, email, password):
-      return self.client.post(
-         "/register",
-         json={
-             "email": email,
-             "password": password
-         }
-    )
-
-
+        return self.client.post(
+            "/register",
+            json={
+                "email": email,
+                "password": password
+            }
+        )
