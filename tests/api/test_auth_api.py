@@ -1,4 +1,6 @@
 import pytest
+from api.validators import validate_token_response
+
 from api.auth_api import AuthAPI
 
 pytestmark = pytest.mark.api
@@ -21,6 +23,12 @@ def test_register_success(auth_api):
         email="eve.holt@reqres.in",
         password="pistol"
     )
+
+    assert response.status_code in (200, 400, 403)
+
+    if response.status_code == 200:
+        body = safe_json(response)
+        validate_token_response(body)
 
     # Reqres is unstable – allow realistic outcomes
     assert response.status_code in (200, 400, 403)
@@ -76,3 +84,12 @@ def test_login_response_time(auth_api):
     )
 
     assert response.elapsed.total_seconds() < 2
+
+REGISTER_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "id": {"type": "integer"},
+        "token": {"type": "string"}
+    },
+    "required": ["token"]
+}
