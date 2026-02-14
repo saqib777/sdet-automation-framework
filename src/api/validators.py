@@ -7,3 +7,5 @@ def validate_user_object(data):
     assert "email" in data
     assert "first_name" in data
     assert "last_name" in data
+    assert isinstance(data["id"], int)
+    assert isinstance(data["email"], str)
