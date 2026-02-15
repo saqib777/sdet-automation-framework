@@ -44,3 +44,9 @@ jobs:
         run: |
           source venv/bin/activate
           pytest -m api -v
+      - name: Run Performance tests
+        run: |
+          source venv/bin/activate
+          export PYTHONPATH=$PYTHONPATH:src
+          pytest -m performance -v
+    
