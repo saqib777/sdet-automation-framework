@@ -1,11 +1,24 @@
-import pytest
+import os
 import time
 import statistics
 import concurrent.futures
+import pytest
 from api.auth_api import AuthAPI
-import statistics
 
 pytestmark = pytest.mark.performance
+
+
+# --------------------------
+# Performance Configuration
+# --------------------------
+
+class PerformanceConfig:
+    MAX_AVG_TIME = float(os.getenv("PERF_MAX_AVG_TIME", "1.0"))
+    MAX_MAX_TIME = float(os.getenv("PERF_MAX_MAX_TIME", "2.0"))
+    MAX_P95_TIME = float(os.getenv("PERF_MAX_P95_TIME", "1.5"))
+    MAX_CONCURRENT_DURATION = float(os.getenv("PERF_MAX_CONCURRENT_DURATION", "5.0"))
+
+
 
 
 @pytest.fixture
