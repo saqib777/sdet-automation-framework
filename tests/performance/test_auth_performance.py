@@ -3,6 +3,7 @@ import time
 import statistics
 import concurrent.futures
 from api.auth_api import AuthAPI
+import statistics
 
 pytestmark = pytest.mark.performance
 
@@ -80,3 +81,49 @@ def test_login_concurrent_requests(auth_api):
     print(f"\nTotal duration for concurrent batch: {total_duration:.4f}s")
 
     assert total_duration < 5
+
+def test_login_95th_percentile(auth_api):
+    """
+    Validate that 95% of requests complete under acceptable threshold.
+    """
+
+    durations = []
+
+    for _ in range(30):
+        start = time.time()
+        response = auth_api.login(
+            email="eve.holt@reqres.in",
+            password="cityslicka"
+        )
+        end = time.time()
+
+        assert response.status_code in (200, 400, 403)
+        durations.append(end - start)
+
+    durations.sort()
+    index_95 = int(len(durations) * 0.95) - 1
+    p95 = durations[index_95]
+
+    print(f"\n95th percentile response time: {p95:.4f}s")
+
+    assert p95 < 1.5
+
+def test_sustained_login_stability(auth_api):
+    """
+    Validate stability over sustained repeated execution.
+    """
+
+    failures = 0
+
+    for _ in range(50):
+        response = auth_api.login(
+            email="eve.holt@reqres.in",
+            password="cityslicka"
+        )
+
+        if response.status_code not in (200, 400, 403):
+            failures += 1
+
+    print(f"\nUnexpected failures during sustained load: {failures}")
+
+    assert failures == 0
